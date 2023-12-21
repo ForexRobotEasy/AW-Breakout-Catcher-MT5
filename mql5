@@ -1,0 +1,80 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                             AW Breakout Catcher MT5|
+//|                                     https://forexroboteasy.com     |
+//|                                           Forex Robot Easy Team   |
+//|                                               Version: 1.0        |
+//+------------------------------------------------------------------+
+
+// Define your variables here
+int takeProfit;
+bool enableNotifications;
+bool enableEmailAlerts;
+bool enablePushNotifications;
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Set default values for variables
+    takeProfit = 100;
+    enableNotifications = true;
+    enableEmailAlerts = true;
+    enablePushNotifications = true;
+
+    // Add any other initialization code here
+
+    return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Expert deinitialization function                                 |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+    // Add any cleanup code here
+}
+
+//+------------------------------------------------------------------+
+//| Expert tick function                                             |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+    // Implement your trading logic here
+
+    // Example code to calculate TakeProfit
+    double stopLoss = 50;
+    double takeProfitLevel = Ask + takeProfit * Point;
+    double riskRewardRatio = (takeProfitLevel - Ask) / stopLoss;
+
+    // Print the calculated TakeProfit level
+    Print('TakeProfit Level: ', takeProfitLevel);
+
+    // Example code to send notifications
+    if (enableNotifications)
+    {
+        // Send a notification to the MetaTrader platform
+        if (enablePushNotifications)
+            SendNotification('TakeProfit Level: ', DoubleToString(takeProfitLevel));
+
+        // Send an email notification
+        if (enableEmailAlerts)
+            SendMail('TakeProfit Level Reached', 'TakeProfit Level: ' + DoubleToString(takeProfitLevel));
+    }
+
+    // Add any other trading code here
+}
+
+//+------------------------------------------------------------------+
+//| Custom functions                                                  |
+//+------------------------------------------------------------------+
+void SendNotification(const string subject, const string message)
+{
+    // Add your code to send a notification to the MetaTrader platform
+}
+
+void SendMail(const string subject, const string message)
+{
+    // Add your code to send an email notification
+}
